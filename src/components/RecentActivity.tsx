@@ -1,58 +1,33 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Activity, MessageSquare, Upload, UserPlus } from "lucide-react";
+import { Activity, MessageSquare, Upload, UserPlus, Brain } from "lucide-react";
 
 export const RecentActivity = () => {
   const activities = [
-    {
-      id: 1,
-      type: "message",
-      user: "João Silva",
-      action: "enviou uma mensagem",
-      time: "2 min atrás",
-      icon: MessageSquare,
-    },
-    {
-      id: 2,
-      type: "upload",
-      user: "Sistema",
-      action: "processou novo documento",
-      time: "15 min atrás",
-      icon: Upload,
-    },
-    {
-      id: 3,
-      type: "user",
-      user: "Maria Santos",
-      action: "iniciou conversa",
-      time: "32 min atrás",
-      icon: UserPlus,
-    },
-    {
-      id: 4,
-      type: "message",
-      user: "Pedro Costa",
-      action: "fez consulta RAG",
-      time: "1h atrás",
-      icon: MessageSquare,
-    },
-    {
-      id: 5,
-      type: "upload",
-      user: "Admin",
-      action: "atualizou FAQ",
-      time: "2h atrás",
-      icon: Upload,
-    },
+    { type: "message", message: "Nova consulta RAG processada", time: "2 min atrás", status: "Sucesso" },
+    { type: "upload", message: "Documento 'FAQ Geral' atualizado", time: "15 min atrás", status: "Processado" },
+    { type: "user", message: "Usuário João iniciou conversa", time: "32 min atrás", status: "Ativo" },
+    { type: "message", message: "Resposta automática enviada", time: "1h atrás", status: "Entregue" },
+    { type: "system", message: "Base de conhecimento sincronizada", time: "2h atrás", status: "Completo" },
   ];
 
-  const getInitials = (name: string) => {
-    return name
-      .split(" ")
-      .map((n) => n[0])
-      .join("")
-      .toUpperCase();
+  const getActivityIcon = (type: string) => {
+    switch (type) {
+      case "message": return { icon: <MessageSquare className="h-4 w-4" />, color: "bg-blue-100 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400" };
+      case "upload": return { icon: <Upload className="h-4 w-4" />, color: "bg-green-100 text-green-600 dark:bg-green-900/20 dark:text-green-400" };
+      case "user": return { icon: <UserPlus className="h-4 w-4" />, color: "bg-purple-100 text-purple-600 dark:bg-purple-900/20 dark:text-purple-400" };
+      default: return { icon: <Brain className="h-4 w-4" />, color: "bg-orange-100 text-orange-600 dark:bg-orange-900/20 dark:text-orange-400" };
+    }
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case "Sucesso": return "text-green-600 bg-green-50 dark:text-green-400 dark:bg-green-900/20";
+      case "Processado": return "text-blue-600 bg-blue-50 dark:text-blue-400 dark:bg-blue-900/20";
+      default: return "text-gray-600 bg-gray-50 dark:text-gray-400 dark:bg-gray-900/20";
+    }
   };
 
   return (

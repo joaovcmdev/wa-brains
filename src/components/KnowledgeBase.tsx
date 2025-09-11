@@ -14,51 +14,56 @@ export const KnowledgeBase = () => {
   ];
 
   return (
-    <Card className="h-[600px]">
-      <CardHeader>
+    <Card className="h-[600px] bg-gradient-card border-primary/20">
+      <CardHeader className="border-b border-border/50">
         <div className="flex items-center justify-between">
-          <CardTitle className="flex items-center gap-2">
-            <FileText className="h-5 w-5 text-primary" />
+          <CardTitle className="flex items-center gap-3 text-xl">
+            <div className="w-8 h-8 bg-primary/20 rounded-lg flex items-center justify-center">
+              <FileText className="h-4 w-4 text-primary" />
+            </div>
             Base de Conhecimento RAG
           </CardTitle>
           <div className="flex gap-2">
-            <Button variant="outline" size="sm">
+            <Button variant="outline" size="sm" className="hover-lift">
               <Search className="h-4 w-4 mr-2" />
               Buscar
             </Button>
-            <Button size="sm">
+            <Button size="sm" variant="premium" className="shadow-glow">
               <Upload className="h-4 w-4 mr-2" />
               Upload
             </Button>
           </div>
         </div>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-6">
         <ScrollArea className="h-[480px]">
           <div className="space-y-4">
             {documents.map((doc, index) => (
               <div
                 key={index}
-                className="flex items-center justify-between p-4 border rounded-lg hover:bg-muted/50 transition-colors"
+                className="flex items-center justify-between p-4 border border-border/50 rounded-xl hover:bg-muted/30 hover:border-primary/30 transition-all duration-300 hover-lift group bg-card/50 backdrop-blur-sm"
               >
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-                    <FileText className="h-5 w-5 text-primary" />
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-gradient-primary rounded-xl flex items-center justify-center shadow-glow group-hover:scale-110 transition-transform duration-300">
+                    <FileText className="h-6 w-6 text-white" />
                   </div>
-                  <div>
-                    <p className="font-medium">{doc.name}</p>
+                  <div className="space-y-1">
+                    <p className="font-semibold text-foreground group-hover:text-primary transition-colors">
+                      {doc.name}
+                    </p>
                     <p className="text-sm text-muted-foreground">
                       {doc.type} • {doc.size}
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-3">
                   <Badge
                     variant={doc.status === "Processado" ? "default" : "secondary"}
+                    className={doc.status === "Processado" ? "bg-green-100 text-green-700 dark:bg-green-900/20 dark:text-green-400" : ""}
                   >
                     {doc.status}
                   </Badge>
-                  <Button variant="ghost" size="sm">
+                  <Button variant="ghost" size="sm" className="hover:bg-primary/10 hover:text-primary">
                     <Plus className="h-4 w-4" />
                   </Button>
                 </div>
