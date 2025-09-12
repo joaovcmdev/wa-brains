@@ -2,15 +2,24 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Activity, MessageSquare, Upload, UserPlus, Brain } from "lucide-react";
+
+const getInitials = (name: string) => {
+  return name
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase())
+    .join('')
+    .slice(0, 2);
+};
 
 export const RecentActivity = () => {
   const activities = [
-    { type: "message", message: "Nova consulta RAG processada", time: "2 min atrás", status: "Sucesso" },
-    { type: "upload", message: "Documento 'FAQ Geral' atualizado", time: "15 min atrás", status: "Processado" },
-    { type: "user", message: "Usuário João iniciou conversa", time: "32 min atrás", status: "Ativo" },
-    { type: "message", message: "Resposta automática enviada", time: "1h atrás", status: "Entregue" },
-    { type: "system", message: "Base de conhecimento sincronizada", time: "2h atrás", status: "Completo" },
+    { id: 1, type: "message", user: "Sistema", action: "processou nova consulta RAG", time: "2 min atrás", status: "Sucesso" },
+    { id: 2, type: "upload", user: "Admin", action: "atualizou documento 'FAQ Geral'", time: "15 min atrás", status: "Processado" },
+    { id: 3, type: "user", user: "João Silva", action: "iniciou conversa", time: "32 min atrás", status: "Ativo" },
+    { id: 4, type: "message", user: "Bot", action: "enviou resposta automática", time: "1h atrás", status: "Entregue" },
+    { id: 5, type: "system", user: "Sistema", action: "sincronizou base de conhecimento", time: "2h atrás", status: "Completo" },
   ];
 
   const getActivityIcon = (type: string) => {
@@ -55,7 +64,9 @@ export const RecentActivity = () => {
                   </p>
                   <p className="text-xs text-muted-foreground">{activity.time}</p>
                 </div>
-                <activity.icon className="h-4 w-4 text-muted-foreground" />
+                <div className={`p-2 rounded-full ${getActivityIcon(activity.type).color}`}>
+                  {getActivityIcon(activity.type).icon}
+                </div>
               </div>
             ))}
           </div>
