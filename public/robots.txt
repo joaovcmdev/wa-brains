@@ -1,3 +1,21 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://wa-brains.app/sitemap.xml
+
+# Disallow admin routes and sensitive paths
+Disallow: /admin/
+Disallow: /api/
+Disallow: /auth/callback
+Disallow: /_next/
+Disallow: /assets/
+
+# Allow important pages for SEO
+Allow: /
+Allow: /auth
+
+# Allow social media bots
 User-agent: Googlebot
 Allow: /
 
@@ -10,5 +28,5 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
-User-agent: *
-Allow: /
+# Crawl delay (1 second to be respectful)
+Crawl-delay: 1

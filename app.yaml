@@ -1,0 +1,88 @@
+runtime: nodejs18
+
+# Google Cloud App Engine configuration for WA-Brains
+service: default
+
+# Environment settings
+env_variables:
+  NODE_ENV: production
+  VITE_SUPABASE_URL: "https://kherttvqpbqjqjveyvll.supabase.co"
+  VITE_SUPABASE_PUBLISHABLE_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtoZXJ0dHZxcGJxanFqdmV5dmxsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc1NDMwNDQsImV4cCI6MjA3MzExOTA0NH0.OCyN_CpLadiJGU_RpkidXYtmkHyAgAJ30LbJ3JeO5tc"
+
+# Instance settings
+automatic_scaling:
+  min_instances: 1
+  max_instances: 10
+  target_cpu_utilization: 0.6
+
+# Resource settings
+resources:
+  cpu: 1
+  memory_gb: 0.5
+  disk_size_gb: 10
+
+# Network settings
+network:
+  forwarded_ports:
+    - 8080
+
+# Static file handlers
+handlers:
+  # Handle static assets with long cache
+  - url: /assets
+    static_dir: dist/assets
+    expiration: 30d
+    secure: always
+    redirect_http_response_code: 301
+
+  # Handle images and media
+  - url: /(.*\.(gif|png|jpg|jpeg|svg|ico|webp))$
+    static_files: dist/\1
+    upload: dist/(.*\.(gif|png|jpg|jpeg|svg|ico|webp))$
+    expiration: 7d
+    secure: always
+
+  # Handle root files (robots.txt, sitemap.xml, etc)
+  - url: /(robots\.txt|sitemap\.xml|manifest\.json)$
+    static_files: dist/\1
+    upload: dist/(robots\.txt|sitemap\.xml|manifest\.json)$
+    expiration: 1d
+    secure: always
+
+  # Catch all handler for SPA routing
+  - url: /.*
+    static_files: dist/index.html
+    upload: dist/index.html
+    secure: always
+    redirect_http_response_code: 301
+
+# Skip files during deployment (reduces build size)
+skip_files:
+  - ^(.*/)?#.*#$
+  - ^(.*/)?.*~$
+  - ^(.*/)?.*\.py[co]$
+  - ^(.*/)?.*/RCS/.*$
+  - ^(.*/)?\..*$
+  - ^(.*/)?node_modules/.*$
+  - ^(.*/)?src/.*$
+  - ^(.*/)?\.env$
+  - ^(.*/)?tsconfig.*\.json$
+  - ^(.*/)?vite\.config\.ts$
+  - ^(.*/)?tailwind\.config\.ts$
+  - ^(.*/)?postcss\.config\.js$
+  - ^(.*/)?README\.md$
+
+# Health check configuration
+readiness_check:
+  path: "/health"
+  check_interval_sec: 5
+  timeout_sec: 4
+  failure_threshold: 2
+  success_threshold: 2
+
+liveness_check:
+  path: "/health"
+  check_interval_sec: 30
+  timeout_sec: 4
+  failure_threshold: 4
+  success_threshold: 2

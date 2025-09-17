@@ -1,0 +1,91 @@
+# Google Cloud Build ignore file for WA-Brains
+# This file specifies files that are uploaded to Google Cloud Platform
+
+# Node modules
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Source files (already compiled)
+src/
+*.ts
+*.tsx
+tsconfig*.json
+
+# Development files
+.env
+.env.local
+.env.development
+.env.test
+
+# Build tools
+vite.config.ts
+tailwind.config.ts
+postcss.config.js
+eslint.config.js
+
+# Documentation
+README.md
+DEPLOY.md
+*.md
+
+# Version control
+.git/
+.gitignore
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Test files
+test/
+tests/
+**/*.test.js
+**/*.test.ts
+**/*.test.tsx
+**/*.spec.js
+**/*.spec.ts
+**/*.spec.tsx
+coverage/
+
+# Cache directories
+.cache/
+.parcel-cache/
+.next/
+.nuxt/
+
+# Lock files (use package-lock.json)
+yarn.lock
+pnpm-lock.yaml
+
+# Local development
+.local/
+
+# Supabase local files
+supabase/.temp/
+supabase/logs/
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
